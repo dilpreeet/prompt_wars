@@ -1,12 +1,16 @@
 import type { NextConfig } from "next";
-import { SECURITY_HEADERS } from "./src/lib/security";
+import { getSecurityHeaders } from "./src/lib/security";
+
+const isDevelopment = process.env.NODE_ENV === "development";
 
 const nextConfig: NextConfig = {
   async headers() {
+    const securityHeaders = getSecurityHeaders(isDevelopment);
+
     return [
       {
         source: "/(.*)",
-        headers: Object.entries(SECURITY_HEADERS).map(([key, value]) => ({
+        headers: Object.entries(securityHeaders).map(([key, value]) => ({
           key,
           value,
         })),
