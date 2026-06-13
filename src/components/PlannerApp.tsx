@@ -11,6 +11,7 @@ import { GroceryList } from "./GroceryList";
 import { MealPlanView } from "./MealPlanView";
 import { PlannerForm } from "./PlannerForm";
 import { SubstitutionsList } from "./SubstitutionsList";
+import { EnhancePanel } from "./EnhancePanel";
 
 const defaultInput: PlanInput = {
   people: 2,
@@ -158,6 +159,7 @@ export function PlannerApp() {
             <MealPlanView meals={plan.meals} />
             <BudgetMeter feasibility={plan.feasibility} />
             <SubstitutionsList substitutions={plan.substitutions} />
+            <EnhancePanel plan={plan} input={input} />
             <GroceryList items={plan.grocery} onToggle={handleGroceryToggle} />
           </>
         )}
