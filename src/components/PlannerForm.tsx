@@ -68,6 +68,7 @@ export function PlannerForm({
       }}
       className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm"
       aria-labelledby="planner-form-heading"
+      aria-busy={isSubmitting}
     >
       <h2 id="planner-form-heading" className="text-xl font-semibold text-stone-900">
         Plan your day
@@ -123,6 +124,9 @@ export function PlannerForm({
               updateField("budget", Number(event.target.value))
             }
             className="mt-3 w-full accent-orange-600"
+            aria-valuemin={5}
+            aria-valuemax={100}
+            aria-valuenow={input.budget}
             aria-valuetext={`$${input.budget}`}
           />
           <div className="mt-1 flex justify-between text-xs text-stone-500">
@@ -217,6 +221,7 @@ export function PlannerForm({
       <button
         type="submit"
         disabled={isSubmitting}
+        aria-busy={isSubmitting}
         className="mt-6 w-full rounded-xl bg-orange-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {isSubmitting ? "Generating plan…" : "Generate my plan"}

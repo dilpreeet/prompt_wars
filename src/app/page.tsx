@@ -1,4 +1,4 @@
-import { PlannerApp } from "@/components/PlannerApp";
+import { PlannerApp } from "@/components/PlannerAppLoader";
 
 export default function Home() {
   return (
