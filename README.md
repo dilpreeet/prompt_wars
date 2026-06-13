@@ -51,6 +51,20 @@ The app works fully without an API key.
 3. Add `GEMINI_API_KEY` as an environment variable (optional)
 4. Deploy — you'll get a public `*.vercel.app` URL
 
+### Vercel settings (important)
+
+In **Project → Settings → Build & Deployment**, use:
+
+| Setting | Value |
+|---------|-------|
+| Framework Preset | **Next.js** |
+| Root Directory | *(leave empty — repo root)* |
+| Build Command | `npm run build` |
+| Output Directory | *(leave empty — do NOT set `.next` or `out`)* |
+| Production Branch | `main` |
+
+If you see a plain **404: NOT_FOUND** page (not the Next.js styled 404), the Output Directory is almost always wrong — clear it and **Redeploy**.
+
 Or use the CLI:
 
 ```bash
