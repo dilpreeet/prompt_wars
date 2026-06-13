@@ -76,7 +76,14 @@ export function EnhancePanel({ plan, input }: EnhancePanelProps) {
 
   if (aiAvailable === null) {
     return (
-      <section className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+      <section
+        aria-labelledby="enhance-heading"
+        aria-busy="true"
+        className="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm"
+      >
+        <h2 id="enhance-heading" className="sr-only">
+          Enhance with AI
+        </h2>
         <p className="text-sm text-stone-500">Checking AI availability…</p>
       </section>
     );
@@ -94,7 +101,7 @@ export function EnhancePanel({ plan, input }: EnhancePanelProps) {
         Get extra prep tips and budget ideas powered by Google Gemini (free tier).
       </p>
 
-      {!aiAvailable ? (
+      {aiAvailable === false ? (
         <p className="mt-4 rounded-xl bg-white/80 px-4 py-3 text-sm text-stone-600">
           AI enhancement is unavailable. Add{" "}
           <code className="rounded bg-stone-100 px-1.5 py-0.5 text-xs">
@@ -143,9 +150,15 @@ export function EnhancePanel({ plan, input }: EnhancePanelProps) {
 
       {tips && (
         <div
+          id="enhance-tips"
+          role="region"
+          aria-labelledby="enhance-tips-heading"
           aria-live="polite"
           className="mt-4 rounded-xl border border-violet-200 bg-white px-4 py-3 text-sm leading-relaxed text-stone-800 whitespace-pre-wrap"
         >
+          <h3 id="enhance-tips-heading" className="sr-only">
+            AI enhancement tips
+          </h3>
           {tips}
         </div>
       )}

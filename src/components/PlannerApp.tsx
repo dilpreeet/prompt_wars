@@ -128,11 +128,16 @@ export function PlannerApp() {
         </aside>
       </div>
 
-      <div
+      <section
+        id="plan-results"
+        aria-labelledby="plan-results-heading"
         aria-live="polite"
         aria-atomic="true"
         className="space-y-8"
       >
+        <h2 id="plan-results-heading" className="sr-only">
+          Generated plan results
+        </h2>
         {plan && plan.message && (
           <div
             role="status"
@@ -174,7 +179,7 @@ export function PlannerApp() {
             </p>
           </div>
         )}
-      </div>
+      </section>
     </div>
   );
 }

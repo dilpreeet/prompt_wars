@@ -17,6 +17,17 @@ body {
   color: var(--foreground);
 }
 
+:focus-visible {
+  outline: 2px solid #ea580c;
+  outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -29,10 +40,20 @@ body {
   color: white;
 }
 
-.skip-link:focus {
+.skip-link:focus-visible {
   left: 1rem;
-  outline: 2px solid #1c1917;
-  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {

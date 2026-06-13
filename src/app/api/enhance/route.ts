@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { enhanceWithGemini, isGeminiConfigured } from "@/lib/gemini";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { MAX_ENHANCE_BODY_BYTES } from "@/lib/security";
 import { validateEnhanceRequest } from "@/lib/validation";
-
-const MAX_BODY_BYTES = 8192;
 
 export async function GET() {
   return NextResponse.json({ available: isGeminiConfigured() });
@@ -33,8 +32,24 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const contentType = request.headers.get("content-type");
+  if (!contentType?.includes("application/json")) {
+    return NextResponse.json(
+      { error: "Content-Type must be application/json" },
+      { status: 415 },
+    );
+  }
+
+  const contentLength = request.headers.get("content-length");
+  if (
+    contentLength &&
+    Number.parseInt(contentLength, 10) > MAX_ENHANCE_BODY_BYTES
+  ) {
+    return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+  }
+
   const rawBody = await request.text();
-  if (rawBody.length > MAX_BODY_BYTES) {
+  if (rawBody.length > MAX_ENHANCE_BODY_BYTES) {
     return NextResponse.json({ error: "Payload too large" }, { status: 413 });
   }
 
