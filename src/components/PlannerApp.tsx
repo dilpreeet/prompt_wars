@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { generatePlan } from "@/lib/engine";
 import { checkFeasibility } from "@/lib/budget";
 import { loadPlan, loadPlanInput, savePlan, savePlanInput } from "@/lib/storage";
@@ -23,26 +23,12 @@ const defaultInput: PlanInput = {
 };
 
 export function PlannerApp() {
-  const [input, setInput] = useState<PlanInput>(defaultInput);
-  const [plan, setPlan] = useState<Plan | null>(null);
+  const [input, setInput] = useState<PlanInput>(
+    () => loadPlanInput() ?? defaultInput,
+  );
+  const [plan, setPlan] = useState<Plan | null>(() => loadPlan());
   const [errors, setErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [hasHydrated, setHasHydrated] = useState(false);
-
-  useEffect(() => {
-    const savedInput = loadPlanInput();
-    const savedPlan = loadPlan();
-
-    if (savedInput) {
-      setInput(savedInput);
-    }
-
-    if (savedPlan) {
-      setPlan(savedPlan);
-    }
-
-    setHasHydrated(true);
-  }, []);
 
   const handleGenerate = useCallback(() => {
     setIsSubmitting(true);
@@ -121,10 +107,6 @@ export function PlannerApp() {
               <BudgetMeter feasibility={liveFeasibility} label="Daily budget" />
             </div>
           </div>
-
-          {!hasHydrated && (
-            <p className="text-sm text-stone-500">Loading saved plan…</p>
-          )}
         </aside>
       </div>
 
@@ -169,7 +151,7 @@ export function PlannerApp() {
           </>
         )}
 
-        {!plan && hasHydrated && (
+        {!plan && (
           <div className="rounded-2xl border border-dashed border-stone-300 bg-stone-50 px-5 py-10 text-center">
             <p className="text-lg font-medium text-stone-700">
               Ready when you are
